@@ -24,7 +24,7 @@ pkgs.mkShell {
     fi
 
     if [ ! -d 'vendor/' ] || [ ! -d 'node_modules/' ]; then
-      read -r -p "Install dependencies? [y/N] " response
+      read -rp "Install dependencies? [y/N] " response
       case "$response" in
           [yY][eE][sS]|[yY])
               composer install
