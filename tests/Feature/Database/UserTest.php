@@ -41,6 +41,8 @@ test('user soft delete works as expected', function () {
 
     expect($user->name)->toBe('Kuro');
     expect($user->deleted_at)->not()->toBeNull();
+
+    $this->assertSoftDeleted($user);
 });
 
 test('error is thrown when user name is duplicated', function () {

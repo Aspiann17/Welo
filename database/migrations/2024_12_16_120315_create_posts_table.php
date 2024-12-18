@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('creator')
                 ->constrained('users', 'id')
-                ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->string('title');
-            $table->string('slug')->index();
+            $table->string('slug')->unique();
             $table->longText('content');
             $table->timestamps();
             $table->softDeletes();
