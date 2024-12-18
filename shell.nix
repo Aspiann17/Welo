@@ -26,23 +26,26 @@ pkgs.mkShell {
     fi
 
     if [ ! -d 'vendor/' ] || [ ! -d 'node_modules/' ]; then
-      read -rp "Install dependencies? [y/N] " response
-      case "$response" in
-          [yY][eE][sS]|[yY])
-              composer install
-              npm install
-              npm run build
-              php artisan migrate
-              ;;
-          *)
-              exit 1
-              ;;
-      esac
+      read -rp "Install dependencies? [Y/n] " response
+
+      if [[ "$response" =~ ^[Nn]$ ]]; then
+        exit 1
+      else
+        composer install
+        npm install
+        npm run build
+        php artisan migrate
+      fi
     fi
 
     if [ ! -f .env ]; then
       cp .env.example .env
       php artisan key:generate
+    fi
+
+    read -rp "Run test? [y/N] " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+      pest
     fi
 
     echo "Use 'run_task' to start the server and 'end_task' to stop it."
